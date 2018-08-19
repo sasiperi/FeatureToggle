@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+   
+   <head>
+        <meta charset="UTF-8" />
+		<th:block th:include="fragments/meta" />	
+	    <th:block th:include="fragments/css" />
+		<th:block th:include="fragments/shim" />
+		<!-- <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/> -->
+	    
+	    <title th:text="#{searchResults.title}">Person List</title>	
+	</head>
+	
+   <body>
+      <h1>FF4J Demo</h1>      
+      <br/><br/>
+      <div class="container">
+	      <h1>
+				<span>Person List</span>
+				<small>
+					<span><a href="addPerson">Add Person</a></span>
+				</small>
+		   </h1>
+	       <hr />
+	       <div class="table-responsive">
+	         <table id="searchResults" class="table table-striped table-bordered dataTable no-footer" role="grid" aria-describedby="example_info">
+	         	<thead>
+		            <tr>
+		               <th class="centered">First Name</th>
+		               <th class="centered">Last Name</th>
+		               <th class="centered">Who Is</th>
+		            </tr>
+	            </thead>
+	            <tbody>
+	            	<th:block th:each="person : ${persons}">
+			            <!-- <tr th:each ="person : ${persons}"> -->
+			            <tr>
+			               <td th:utext="${person.firstName}">...</td>
+			               <td th:utext="${person.lastName}">...</td>
+			               <td th:utext="${person.whoIs}">...</td>
+			            </tr>
+		           </th:block>
+	            </tbody>
+	         </table>
+	      </div>
+	     </div>
+   </body>
+</html>
