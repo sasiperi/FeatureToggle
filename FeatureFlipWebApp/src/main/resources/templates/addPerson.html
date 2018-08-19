@@ -7,7 +7,7 @@
 		<th:block th:include="fragments/shim" />
 		<!-- <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/> -->
 	    
-	    <title th:text="#{searchResults.title}">Add Person</title>	
+	    <title>Add Person</title>	
 	</head>
    <body>
       <h1>Create a Person:</h1>
@@ -24,18 +24,34 @@
          -->
           
       <form th:action="@{/addPerson}" th:object="${personForm}" method="POST" class="form-horizontal">
-       <div class="form-group">
-         First Name:
-         <input type="text" th:field="*{firstName}" />    
-         <br/>
-         Last Name:
-         <input type="text" th:field="*{lastName}" />     
-         <br/>
-         Who Is:
-         <input type="text" th:field="*{whoIs}" />     
-         <br/>
-         <input type="submit" value="Create" />
-        </div>
+      
+	      <div class="form-group">
+			<label for="firstName" class="col-sm-2 control-label">First Name</label>
+ 			<div class="col-sm-5">
+				<input type="text" th:field="*{firstName}" placeholder="First Name" class="form-control" autofocus="autofocus"></input>				
+			</div>
+		  </div>
+		  <div class="form-group">
+			<label for="lastName" class="col-sm-2 control-label">Last Name</label>
+			<div class="col-sm-5">
+				<input type="text" th:field="*{lastName}" placeholder="Last Name" class="form-control"></input>				
+			</div>
+		  </div>
+		  <div class="form-group">
+			<label for="whoIs" class="col-sm-2 control-label">Who Is</label>
+			<div class="col-sm-5">
+				<input type="text" th:field="*{whoIs}" placeholder="Who Is" class="form-control"></input>				
+			</div>
+		  </div>
+       
+         <div class="form-group">            
+            <div class="col-sm-offset-2 col-sm-5">
+				 <button type="submit" class="btn btn-info">
+					<span class="glyphicon glyphicon-ok"></span> Create
+				 </button>
+			 </div>
+		 </div>
+			
       </form>
        
       <br/>

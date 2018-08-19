@@ -8,7 +8,7 @@
 		<th:block th:include="fragments/shim" />
 		<!-- <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/> -->
 	    
-	    <title th:text="#{searchResults.title}">Person List</title>	
+	    <title>Person List</title>	
 	</head>
 	
    <body>
@@ -16,33 +16,45 @@
       <br/><br/>
       <div class="container">
 	      <h1>
-				<span>Person List</span>
-				<small>
-					<span><a href="addPerson">Add Person</a></span>
-				</small>
+				<span>Person List</span>				
 		   </h1>
 	       <hr />
-	       <div class="table-responsive">
-	         <table id="searchResults" class="table table-striped table-bordered dataTable no-footer" role="grid" aria-describedby="example_info">
-	         	<thead>
-		            <tr>
-		               <th class="centered">First Name</th>
-		               <th class="centered">Last Name</th>
-		               <th class="centered">Who Is</th>
-		            </tr>
-	            </thead>
-	            <tbody>
-	            	<th:block th:each="person : ${persons}">
-			            <!-- <tr th:each ="person : ${persons}"> -->
+	       <form method="POST" class="form-horizontal" name="actionForm" id="actionForm">
+		       <div class="table-responsive">
+		         <table id="searchResults" class="table table-striped table-bordered dataTable no-footer" role="grid" aria-describedby="example_info">
+		         	<thead>
 			            <tr>
-			               <td th:utext="${person.firstName}">...</td>
-			               <td th:utext="${person.lastName}">...</td>
-			               <td th:utext="${person.whoIs}">...</td>
+			               <th class="centered">First Name</th>
+			               <th class="centered">Last Name</th>
+			               <th class="centered">Who Is</th>
+			               <th class="centered">Actions</th>
 			            </tr>
-		           </th:block>
-	            </tbody>
-	         </table>
-	      </div>
+		            </thead>
+		            <tbody>
+		            	<th:block th:each="person,iterStat : ${persons}">
+				            <!-- <tr th:each ="person : ${persons}"> -->
+				            <tr>
+				               <td th:utext="${person.firstName}">...</td>
+				               <td th:utext="${person.lastName}">...</td>
+				               <td th:utext="${person.whoIs}">...</td>				               
+				               <td>
+				               	<a href="#"><span class="glyphicon glyphicon-edit"></span></a>
+				               	<!-- <a  href="removePerson/${iter.index}" onclick="document.getElementById('actionForm').action='removePerson/${iter.index}'';document.getElementById('actionForm').submit();"><span class="glyphicon glyphicon-trash"></span></a> -->
+				               	<a  th:href="@{'removePerson/'+${iterStat.index}}"><span class="glyphicon glyphicon-trash"></span></a>
+				               	<!-- <input type="hidden" name="index" id="index" value="${iter.index}"/> -->
+				               </td>
+				            </tr>
+			           </th:block>
+		            </tbody>
+		         </table>
+		         
+		         <h1>            
+		            <a href="addPerson" class="btn btn-info">
+	      				<span class="glyphicon glyphicon-plus-sign"></span> Add Person
+	      			</a>    			
+		         </h1>
+		      </div>
+		     </form>
 	     </div>
    </body>
 </html>

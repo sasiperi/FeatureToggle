@@ -7,15 +7,19 @@
 		<th:block th:include="fragments/shim" />
 		<!-- <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/> -->
 	    
-	    <title th:text="#{searchResults.title}">Welcome</title>	
+	    <!-- <title th:text="#{searchResults.title}">Welcome</title>	 -->
+	    <title>Welcome</title>	
 	</head>
    <body>
     <div class="container">
       <h1>Welcome</h1>
       <h2 th:utext="#{welcome.message}">..!..</h2>
-      
-       
-      <!--  
+		<p>
+			Envelope icon as a link: <a href="#"><span
+				class="glyphicon glyphicon-envelope"></span></a>
+		</p>
+
+		<!--  
        
          In Thymeleaf the equivalent of
          JSP's ${pageContext.request.contextPath}/edit.html
