@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.springframework.org/security/tags">
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.springframework.org/security/tags" xmlns:ff4j="https://ff4j.github.io">
    
    <head>
         <meta charset="UTF-8" />
@@ -42,6 +42,8 @@
 				               		<a href="#"><span class="glyphicon glyphicon-edit"></span></a>				               				               			
 				               		<a  th:href="@{'removePerson/'+${iterStat.index}}"><span class="glyphicon glyphicon-trash"></span></a>
 				               	</div>
+				               	
+				               	<div ff4j:enable="sasi-f1">dfksdjfksdlfksdfks</div>
 				               	
 				               </td>
 				            </tr>

@@ -81,11 +81,14 @@ public class FF4JConfig {
     }*/
 	
     @Bean
-    public FF4j getFF4j() {
+    public FF4j getFF4j() 
+    {
         FF4j ff4j = new FF4j();
         ff4j.setFeatureStore(new FeatureStoreSpringJdbc(dataSource));
         ff4j.setPropertiesStore(new PropertyStoreSpringJdbc(dataSource));
         ff4j.setEventRepository(new EventRepositorySpringJdbc(dataSource));
+        
+        ff4j.audit(true);
         
         // ADD FEATURES PROGRAMATICALLY
         

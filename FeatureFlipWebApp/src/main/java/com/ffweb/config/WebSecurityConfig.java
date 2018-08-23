@@ -11,7 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
-@EnableWebSecurity(debug=true)
+//@EnableWebSecurity(debug=true)
+@EnableWebSecurity
 public class WebSecurityConfig extends  WebSecurityConfigurerAdapter
 {
    /* @Autowired
@@ -25,9 +26,10 @@ public class WebSecurityConfig extends  WebSecurityConfigurerAdapter
        {
              http.csrf().disable()
                  .authorizeRequests()            
-                     .antMatchers("/css/**","/fonts/**","/images/**","/js/**","/favicon.ico").permitAll()
-                     .antMatchers("/**").hasAnyRole("USER","ADMIN")
-                     .antMatchers("/removePerson").hasRole("ADMIN")
+                     .antMatchers("/css/**","/fonts/**","/images/**","/js/**","/favicon.ico","/img/**","/font/**","/ff4j-web-console/**").permitAll()
+                     //.antMatchers("/**").hasAnyRole("USER","ADMIN")
+                     .antMatchers("/","/index","/personList","/addPerson","/addPerson").hasAnyRole("USER","ADMIN")
+                     .antMatchers("/removePerson","/modifyPerson").hasRole("ADMIN")
                      .anyRequest().authenticated()
                    .and()
                    .formLogin()
