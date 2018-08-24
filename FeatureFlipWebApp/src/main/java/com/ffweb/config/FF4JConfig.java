@@ -3,6 +3,7 @@ package com.ffweb.config;
 import javax.sql.DataSource;
 
 import org.ff4j.FF4j;
+import org.ff4j.security.SpringSecurityAuthorisationManager;
 import org.ff4j.springjdbc.store.EventRepositorySpringJdbc;
 import org.ff4j.springjdbc.store.FeatureStoreSpringJdbc;
 import org.ff4j.springjdbc.store.PropertyStoreSpringJdbc;
@@ -10,66 +11,83 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.thymeleaf.dialect.IDialect;
-import org.thymeleaf.spring4.SpringTemplateEngine;
-import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.templateresolver.TemplateResolver;
 
 import com.ffweb.thymeleaf.MyFF4JDialect;
 
 @Configuration
-public class FF4JConfig 
+public class FF4JConfig
 {
     @Qualifier("ff4jDataSource")
     @Autowired
     private DataSource dataSource;
+
+    /*@Autowired
+    SpringResourceTemplateResolver srt;*/
     
     @Autowired
-    SpringResourceTemplateResolver srt;
+    SpringSecurityAuthorisationManager ff4jSecMgr;
     
+    ////////////////////////////////////////
+    // FF4J CORE & FEATURE STORE CONFIGURATION
+    ////////////////////////////////////////
+         
     @Bean
-    public FF4j getFF4j() {
+    public FF4j getFF4j()
+    {
+
+        FF4j ff4j = new FF4j();//plain ffj
         
-        /*BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUsername("root");
-        dataSource.setPassword("12345");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/demo_webapp");
-*/
-        
-        FF4j ff4j = new FF4j();
+        //Set feature store to be DATA BASE
         ff4j.setFeatureStore(new FeatureStoreSpringJdbc(dataSource));
         ff4j.setPropertiesStore(new PropertyStoreSpringJdbc(dataSource));
         ff4j.setEventRepository(new EventRepositorySpringJdbc(dataSource));
-        
+
+        //Enale audtit and monitoring (Note: works only on invocation of "check" for usage
         ff4j.audit();
         
-         // Enable Cache Proxy
-         //ff4j.cache(new InMemoryCacheManager());
-        
-        // ADD FEATURES PROGRAMATICALLY
-        
-       /* ff4j
-		.createFeature("sasi-f1")
-        .createFeature("Awesome-Sasi-1-Feature")
-        .createFeature("f2").createFeature("sasi-f2")
-        .createProperty(new PropertyString("SampleProperty", "go-sasi!"))
-        .createProperty(new PropertyInt("SamplePropertyIn", 12));
-		
-		Feature exp = new Feature("exp-sasi");
-        exp.setFlippingStrategy(new ExpressionFlipStrategy("exp-sasi", "f1 & f2 | !f1 | f2"));
-        ff4j.createFeature(exp);*/
+        //Security
+        ff4j.setAuthorizationsManager(ff4jSecMgr);
         
         return ff4j;
     }
 
-    @Bean
-    public SpringTemplateEngine templateEngine(){
-        SpringTemplateEngine templateEngine = new SpringTemplateEngine();       
-        templateEngine.setTemplateResolver(srt);
+    
+    ////////////////////////////////////////
+    // FF4J THYMELEAF CONFIGURATION 
+    ////////////////////////////////////////
+    
+    /*@Bean
+    public SpringTemplateEngine templateEngine(TemplateResolver templateResolver)
+    {
+        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+        templateEngine.setTemplateResolver(templateResolver);
         MyFF4JDialect dialect = new MyFF4JDialect();
         dialect.setFF4J(getFF4j());
         templateEngine.addDialect(dialect);
         return templateEngine;
+    }*/
+    
+    @Bean
+    public MyFF4JDialect myFF4JDialect(TemplateResolver templateResolver)
+    {        
+        MyFF4JDialect dialect = new MyFF4JDialect();
+        dialect.setFF4J(getFF4j());
+        
+        return dialect;
     }
     
+    
+    ////////////////////////////////////////
+    // FF4J SECUIRTY CONFIGURATION 
+    ////////////////////////////////////////
+    
+    @Bean
+    public SpringSecurityAuthorisationManager ff4SecuirtyAuthManager()
+    {
+        
+        return new SpringSecurityAuthorisationManager();
+    }
+    
+
 }

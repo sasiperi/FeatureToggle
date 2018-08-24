@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.springframework.org/security/tags" xmlns:ff4j="https://ff4j.github.io">
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.springframework.org/security/tags">
    
    <head>
         <meta charset="UTF-8" />
@@ -16,7 +16,8 @@
       <br/><br/>
       <div class="container">
 	      <h1>
-				<span>Person List</span>				
+				<span>Person List</span>		
+				<span ff4j:enable="Beta-Feature"><font color="red">BETA FEATURE</font></span>						
 		   </h1>
 	       <hr />
 	       <form method="POST" class="form-horizontal" name="actionForm" id="actionForm">
@@ -28,6 +29,7 @@
 			               <th class="centered">Last Name</th>
 			               <th class="centered">Who Is</th>
 			               <th class="centered">Actions</th>
+			               <th class="centered">Simple Flip</th>
 			            </tr>
 		            </thead>
 		            <tbody>
@@ -43,9 +45,8 @@
 				               		<a  th:href="@{'removePerson/'+${iterStat.index}}"><span class="glyphicon glyphicon-trash"></span></a>
 				               	</div>
 				               	
-				               	<div ff4j:enable="sasi-f1">dfksdjfksdlfksdfks</div>
-				               	
 				               </td>
+				               <td>  <div ff4j:enable="sasi-f1">SimpleFlip</div> </td>
 				            </tr>
 			           </th:block>
 		            </tbody>
