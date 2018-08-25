@@ -9,13 +9,17 @@ import org.ff4j.springjdbc.store.FeatureStoreSpringJdbc;
 import org.ff4j.springjdbc.store.PropertyStoreSpringJdbc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.thymeleaf.templateresolver.TemplateResolver;
 
 import com.ffweb.thymeleaf.MyFF4JDialect;
 
 @Configuration
+@ConditionalOnClass({FF4j.class})
+@ComponentScan(value = {"org.ff4j.aop", "org.ff4j.spring"})
 public class FF4JConfig
 {
     @Qualifier("ff4jDataSource")

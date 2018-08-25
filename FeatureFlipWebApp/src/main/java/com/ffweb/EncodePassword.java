@@ -11,6 +11,8 @@ public class EncodePassword
         
         System.out.println(pe.encode("sasi"));
         System.out.println(pe.encode("peri"));
+        
+        System.out.println(Integer.toBinaryString(1+1));
                 
     }
 }

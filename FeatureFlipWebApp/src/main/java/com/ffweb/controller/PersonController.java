@@ -8,6 +8,7 @@ import org.ff4j.spring.autowire.FF4JFeature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ffweb.form.PersonForm;
 import com.ffweb.model.Person;
+import com.ffweb.service.CalculationsService;
 
 @Controller
 @RequestScope
@@ -34,6 +36,10 @@ public class PersonController
 
     @Autowired
     private FF4j ff4j;
+    
+    @Autowired
+    @Qualifier("caluculationServiceDecimal")
+    CalculationsService calcSvc;
     
     private static List<Person> persons = new ArrayList<Person>();
 
@@ -149,7 +155,7 @@ public class PersonController
     @RequestMapping(value = { "/addNumbers" }, method = RequestMethod.POST)
     public String addNumbers(RedirectAttributes redirectModel, @RequestParam("numOne") int numOne, @RequestParam("numTwo") int numTwo)
     {        
-            int sum = numOne+numTwo;
+            String sum = calcSvc.addNumbers(numOne, numTwo);
             redirectModel.addFlashAttribute("sum",sum);
             return "redirect:/personList";
       
