@@ -3,8 +3,12 @@ package com.ffweb.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.ff4j.FF4j;
+import org.ff4j.core.FlippingExecutionContext;
 import org.ff4j.spring.autowire.FF4JFeature;
+import org.ff4j.strategy.ClientFilterStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +76,7 @@ public class PersonController
     }
 
     @RequestMapping(value = { "/personList" }, method = RequestMethod.GET)
-    public String personList(Model model)
+    public String personList(Model model, HttpServletRequest request)
     {        
         if(feature_X)
         {
@@ -83,19 +87,14 @@ public class PersonController
             LOG.info(" SASI-F1 OFF");
         }
         
-        if(ff4j.check("sasi-f2"))
-        {
-            LOG.info(" SASI-F2 ON");
-        }
-        else
-        {
-            LOG.info(" SASI-F2 OFF");
-        }
+        setClientInFlipContext(model, request);
+       
         model.addAttribute("persons", persons);        
 
         return "personList";
     }
 
+   
     @RequestMapping(value = { "/addPerson" }, method = RequestMethod.GET)
     public String showAddPersonPage(Model model)
     {
@@ -135,6 +134,16 @@ public class PersonController
       
     }
     
+    @RequestMapping(value = { "/addNumbers" }, method = RequestMethod.POST)
+    public String addNumbers(RedirectAttributes redirectModel, @RequestParam("numOne") int numOne, @RequestParam("numTwo") int numTwo)
+    {        
+            String sum = calcSvc.addNumbers(numOne, numTwo);
+            redirectModel.addFlashAttribute("sum",sum);
+            return "redirect:/personList";
+      
+    }
+
+    
     @RequestMapping(value = { "/modifyPerson/{firstName}/{lastName}/{whoIs}" }, method = RequestMethod.POST)
     public String modifyPerson(Model model, @PathVariable String firstName, @PathVariable String lastName, @PathVariable String whoIs)
     {
@@ -152,13 +161,32 @@ public class PersonController
         return "addPerson";
     }
     
-    @RequestMapping(value = { "/addNumbers" }, method = RequestMethod.POST)
-    public String addNumbers(RedirectAttributes redirectModel, @RequestParam("numOne") int numOne, @RequestParam("numTwo") int numTwo)
-    {        
-            String sum = calcSvc.addNumbers(numOne, numTwo);
-            redirectModel.addFlashAttribute("sum",sum);
-            return "redirect:/personList";
-      
+    private void setClientInFlipContext(Model model, HttpServletRequest request)
+    {
+        FlippingExecutionContext fex = new FlippingExecutionContext();
+        fex.addValue(ClientFilterStrategy.CLIENT_HOSTNAME, getClientIp(request));
+        if(ff4j.check("client-feature",fex))
+        {
+            model.addAttribute("changeLook", true);
+        }
+        
     }
+    
+    private String getClientIp(HttpServletRequest request) {
 
+        String remoteAddr = "";
+
+        if (request != null) {
+            remoteAddr = request.getHeader("X-FORWARDED-FOR");
+            LOG.info("X-FORWARDED-FOR : " + remoteAddr);
+            if (remoteAddr == null || "".equals(remoteAddr)) {
+                remoteAddr = request.getRemoteAddr();
+                
+                LOG.info("Remote Addr : " + remoteAddr);
+            }           
+        }
+
+        return remoteAddr;
+    }
+   
 }

@@ -11,10 +11,14 @@
 	    <title>Person List</title>	
 	</head>
 	
-   <body>
+   <body th:style="${changeLook}? 'background-color:#e6ffff;' : 'background-color:#ffffff;'">
+    
       <h1>FF4J Demo</h1>      
       <br/><br/>
       <div class="container">
+            <h2>					
+				<span ff4j:enable="Release-date"><font color="green">More super cool features are available from today !! </font></span>									
+		   </h2>
 	        <h1>
 				<span>Person List</span>		
 				<span ff4j:enable="Beta-Feature-1"><font color="red">BETA FEATURE</font></span>									
