@@ -65,16 +65,22 @@
 			<artifactId>thymeleaf-extras-springsecurity4</artifactId>
 		</dependency>
 		
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 		</dependency>
-
+       -->
 		<dependency>
             <groupId>org.ff4j</groupId>
-            <artifactId>ff4j-spring-boot-starter</artifactId>
+            <artifactId>ff4j-core</artifactId>
             <version>${ff4j.version}</version>
-        </dependency>			
+        </dependency>
+        
+        <dependency>
+            <groupId>org.ff4j</groupId>
+            <artifactId>ff4j-aop</artifactId>
+            <version>${ff4j.version}</version>
+        </dependency>				
 		
 		<dependency>
             <groupId>org.ff4j</groupId>

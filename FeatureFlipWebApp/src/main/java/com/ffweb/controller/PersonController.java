@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.annotation.RequestScope;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ffweb.form.PersonForm;
 import com.ffweb.model.Person;
@@ -56,12 +58,7 @@ public class PersonController
         return "index";
     }
     
-    /*@GetMapping("/login")
-    public String login(Model model, @ModelAttribute("loginForm") PersonForm personForm)
-    {
-        return "/login";
-    }*/
-    
+      
     @GetMapping("/login")
     public String login()
     {
@@ -88,7 +85,7 @@ public class PersonController
         {
             LOG.info(" SASI-F2 OFF");
         }
-        model.addAttribute("persons", persons);
+        model.addAttribute("persons", persons);        
 
         return "personList";
     }
@@ -147,6 +144,15 @@ public class PersonController
 
         model.addAttribute("errorMessage", true);
         return "addPerson";
+    }
+    
+    @RequestMapping(value = { "/addNumbers" }, method = RequestMethod.POST)
+    public String addNumbers(RedirectAttributes redirectModel, @RequestParam("numOne") int numOne, @RequestParam("numTwo") int numTwo)
+    {        
+            int sum = numOne+numTwo;
+            redirectModel.addFlashAttribute("sum",sum);
+            return "redirect:/personList";
+      
     }
 
 }

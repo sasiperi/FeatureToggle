@@ -11,6 +11,7 @@ public class EncodePassword
         
         System.out.println(pe.encode("sasi"));
         System.out.println(pe.encode("peri"));
+                
     }
 }
 
