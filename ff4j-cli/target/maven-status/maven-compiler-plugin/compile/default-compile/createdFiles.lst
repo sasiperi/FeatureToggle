@@ -5,8 +5,8 @@ org\ff4j\cli\FF4jCliOptions.class
 org\ff4j\cli\MainCli.class
 org\ff4j\cli\util\OSUtil.class
 org\ff4j\cli\ansi\AnsiTerminal$1.class
-org\ff4j\cli\FF4jCliDisplay.class
-org\ff4j\cli\ansi\AnsiConstants.class
 org\ff4j\cli\ansi\AnsiForegroundColor.class
 org\ff4j\cli\ansi\AnsiTerminal.class
 org\ff4j\cli\FF4jCliProcessor.class
+org\ff4j\cli\FF4jCliDisplay.class
+org\ff4j\cli\ansi\AnsiConstants.class
